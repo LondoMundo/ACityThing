@@ -6,33 +6,32 @@ import wx.animate
 res = [1,2,3]
 com = []
 ind = []
-def Animate(level)
-class MyPanel(wx.Panel):
-    """ class MyPanel creates a panel, inherits wx.Panel """
-    def __init__(self, parent, id):
-        # default pos and size creates a panel that fills the frame
-        wx.Panel.__init__(self, parent, id)
-        self.SetBackgroundColour("white")
-        # pick the filename of an animated GIF file you have ...
-        # give it the full path and file name!
-        #set this to "/file/file/file" + level + ".gif" Then add Animate() to upgrade functions
-        ag_fname = "/Users/colin/Graphic Design/residential.gif"
-        ag = wx.animate.GIFAnimationCtrl(self, id, ag_fname, pos=(10, 10))
-        # clears the background
-        ag.GetPlayer().UseBackgroundColour(True)
-        # continuously loop through the frames of the gif file (default)
-        ag.Play()
-        an.Play()
-app = wx.PySimpleApp()
-# create a window/frame, no parent, -1 is default ID
-# give it a size so the image will fit ...
-frame = wx.Frame(None, -1, "wx.animate.GIFAnimationCtrl()", size = (600, 500))
-# call the derived class, -1 is default ID
-MyPanel(frame, -1)
-# show the frame
-frame.Show(True)
-# start the event loop
-app.MainLoop()
+def Animate(level):
+    class MyPanel(wx.Panel):
+        """ class MyPanel creates a panel, inherits wx.Panel """
+        def __init__(self, parent, id):
+            # default pos and size creates a panel that fills the frame
+            wx.Panel.__init__(self, parent, id)
+            self.SetBackgroundColour("white")
+            # pick the filename of an animated GIF file you have ...
+            # give it the full path and file name!
+            #set this to "/file/file/file" + level + ".gif" Then add Animate() to upgrade functions
+            ag_fname = "/Users/colin/Documents/github/ACityThing/assets/residential" + `level` + ".gif"
+            ag = wx.animate.GIFAnimationCtrl(self, id, ag_fname, pos=(10, 10))
+            # clears the background
+            ag.GetPlayer().UseBackgroundColour(True)
+            # continuously loop through the frames of the gif file (default)
+            ag.Play()
+    app = wx.PySimpleApp()
+    # create a window/frame, no parent, -1 is default ID
+    # give it a size so the image will fit ...
+    frame = wx.Frame(None, -1, "wx.animate.GIFAnimationCtrl()", size = (600, 500))
+    # call the derived class, -1 is default ID
+    MyPanel(frame, -1)
+    # show the frame
+    frame.Show(True)
+    # start the event loop
+    app.MainLoop()
 
 def residential():
     resLen = len(res)
@@ -123,31 +122,39 @@ def upgradeLand(level):
     if level == 1:
         print "upgrade will take ten seconds"
         sleep(10)
-        
+        Animate(level)
     elif level == 2:
         print "upgrade will take twenty seconds"
         sleep(20)
+        Animate(level)
     elif level == 3:
         print "upgrade will take fourty seconds"
         sleep(40)
+        Animate(level)
     elif level == 4:
         print "upgrade will take eighty seconds"
         sleep(80)
+        Animate(level)
     elif level == 5:
         print "upgrade will take one-hundred seconds"
         sleep(100)
+        Animate(level)
     elif level == 6:
         print "upgrade will take one-hundred-fifty seconds"
         sleep(150)
+        Animate(level)
     elif level == 7:
         print "upgrade will take two-hundred seconds"
         sleep(200)
+        Animate(level)
     elif level == 8:
         print "upgrade will take two-hundred-fifty seconds"
         sleep(250)
+        Animate(level)
     elif level == 9:
         print "upgrade will take three-hundred seconds"
         sleep(300)
+        Animate(level)
         
 def stats(landType):
     print "Placeholder"
