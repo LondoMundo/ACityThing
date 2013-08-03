@@ -1,11 +1,15 @@
+#imports the sleep function from the time module to allow for [sleep]ing
 from time import sleep
 import Tkinter as tk # gives tk namespace
+#wx is used to display the gifs of buildings
 import wx
 import wx.animate
-
+#res, com, and ind lists are initialized here, and stores the levels of propertys
 res = [1,2,3]
 com = []
 ind = []
+#defines a function that takes property level as an argument
+#function displays a gif (or later a video file from blender) of buildings
 def Animate(level):
     class MyPanel(wx.Panel):
         """ class MyPanel creates a panel, inherits wx.Panel """
@@ -32,11 +36,15 @@ def Animate(level):
     frame.Show(True)
     # start the event loop
     app.MainLoop()
-
+#defines the residential functions
 def residential():
+    #figure out the length of the list 'res'
     resLen = len(res)
+    #print the number of residential propertys owned 
     print "you have " + `resLen` + " residential areas"
+    #loop is the counter used in the while loop below
     loop = 0
+    #loop through resLen to list levels of things
     while loop < resLen:
         print "area " + `loop + 1` + " is level " + `res[loop]`
         loop +=1
@@ -52,13 +60,14 @@ def residential():
     elif buyOrUp == "up":
         print "What piece of land do you want to upgrade?(1,2,3...)"
         pieceToUp = int(raw_input())
+        #here we have to subtract 1, because lists start at 0, not 1 (input of 1 returns res[0])
         pieceToUp = pieceToUp - 1
         upgradeLand(res[pieceToUp])
         res[pieceToUp] = res[pieceToUp] + 1
         
     elif buyOrUp == "stats":
         stats(res)
-        
+#see documentation of residential() It's basicly the same         
 def commercial():
     comLen = len(com)
     print "you have " + `comLen` + " commercial areas"
@@ -85,7 +94,7 @@ def commercial():
         stats(com)
     else:
         print "please use a real command"
-    
+#see the documentation on residential areas, it's basicly the same
 def industry():
     indLen = len(ind)
     print "you have " + `indLen` + " industrial areas"
@@ -157,7 +166,6 @@ def upgradeLand(level):
         Animate(level)
         
 def stats(landType):
-    print "Placeholder"
     
     data = landType
     root = tk.Tk()
@@ -169,8 +177,10 @@ def stats(landType):
     # the variables below size the bar graph
     # experiment with them to fit your needs
     # highest y = max_data_value * y_stretch
+    #these comments are crap. The window is resizeable idiots
     y_stretch = 15
     # gap between lower canvas edge and x axis
+    #again, resizeable windows
     y_gap = 20
     # stretch enough to get all data items in
     x_stretch = 10
@@ -192,9 +202,6 @@ def stats(landType):
     
 def stuff():
     print res
-
-        
-    
     
 def population():
     res_pop = (res.count(1) * 2 ) + (res.count(2) * 4) + (res.count(3) * 8) + (res.count(4) * 16) + (res.count(5) * 32) + (res.count(6) * 64) +(res.count(7) * 128) + (res.count(8) * 256) + (res.count(9) * 512)
@@ -203,7 +210,8 @@ def population():
     print "your commercial population is " + com_pop
     ind_pop = (ind.count(1) * 2 ) + (ind.count(2) * 4) + (ind.count(3) * 8) + (ind.count(4) * 16) + (ind.count(5) * 32) + (ind.count(6) * 64) +(ind.count(7) * 128) + (ind.count(8) * 256) + (ind.count(9) * 512)
     print "Your industrial population is " + ind_pop
-
+#This is where the program actually starts
+#The above simply defines functions
 print "welcome to ytiCmiS"
 print "You need to build your city up from the ground"
 while 1==1:
