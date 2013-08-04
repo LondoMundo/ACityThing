@@ -4,6 +4,7 @@ import Tkinter as tk # gives tk namespace
 #wx is used to display the gifs of buildings
 import wx
 import wx.animate
+import cStringIO
 #res, com, and ind lists are initialized here, and stores the levels of propertys
 res = [1,2,3]
 com = []
@@ -36,6 +37,8 @@ def Animate(level):
     frame.Show(True)
     # start the event loop
     app.MainLoop()
+
+
 #defines the residential functions
 def residential():
     #figure out the length of the list 'res'
@@ -201,7 +204,7 @@ def stats(landType):
 
     
 def stuff():
-    print res
+    staticCity(res)
     
 def population():
     res_pop = (res.count(1) * 2 ) + (res.count(2) * 4) + (res.count(3) * 8) + (res.count(4) * 16) + (res.count(5) * 32) + (res.count(6) * 64) +(res.count(7) * 128) + (res.count(8) * 256) + (res.count(9) * 512)
