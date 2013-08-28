@@ -20,9 +20,8 @@ def Animate(level):
             wx.Panel.__init__(self, parent, id)
             self.SetBackgroundColour("white")
             # pick the filename of an animated GIF file you have ...
-            # give it the full path and file name!
-            #set this to "/file/file/file" + level + ".gif" Then add Animate() to upgrade functions
-            ag_fname = "/Users/colin/Documents/github/ACityThing/assets/residential" + `level` + ".gif"
+            # The reason we use /assets/residential is because it will always be there. It donsn't depend on what is farther up the file system. /Users/colin/ : /Home/colin/
+            ag_fname = "assets/residential" + `level` + ".gif"
             ag = wx.animate.GIFAnimationCtrl(self, id, ag_fname, pos=(10, 10))
             # clears the background
             ag.GetPlayer().UseBackgroundColour(True)
@@ -31,21 +30,35 @@ def Animate(level):
     app = wx.PySimpleApp()
     # create a window/frame, no parent, -1 is default ID
     # give it a size so the image will fit ...
-    frame = wx.Frame(None, -1, "wx.animate.GIFAnimationCtrl()", size = (600, 500))
+    frame = wx.Frame(None, -1, "Upgrading.....", size = (600, 500))
     # call the derived class, -1 is default ID
     MyPanel(frame, -1)
     # show the frame
     frame.Show(True)
     # start the event loop
     app.MainLoop()
+def DisplayImages():
+    class panel(wx.Panel):
+        def __init__(self, parent,id):
+            wx.Panel.__init__(self, parent,id)
+            bmp = wx.Image("fruit.jpg", wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+            newImage = wx.StaticBitmap(self, parent,-1,bitmap=bmp)
+            newImage.Show()
+            
+    app = wx.PySimpleApp()
+    frame = wx.Frame(None, -1, "wx.animate.GIFAnimationCtrl()", size = (600, 500))
+    panel(frame, -1)
+    frame.Show(True)
+    app.MainLoop()
+        
 #this class defines a thread used to collect taxes every set amount of seconds currently 60.
 class MyThread(threading.Thread):
 
     def run(self):
         while 1==1:
-            sleep(60)
+            SilentPopulation()
+            sleep(15)
             global money
-            print "You have " + `money` + "money"
             """10,15,20 could be custom tax rates later"""
             money = money + (res_pop * 10 ) + (com_pop * 15) + (ind_pop * 20)
             print "You now have " + `money` + "money"
@@ -110,9 +123,13 @@ def commercial():
     buyOrUp = raw_input()
     buyOrUp = buyOrUp.lower()
     if buyOrUp == "buy":
-        buyLand()
-        com.append(1)
-        print "Done"
+        if money >=100:
+            buyLand()
+            money -=100
+            com.append(1)
+            print "Done"
+        else:
+            print "You don't have enough money to do this"
     
     elif buyOrUp == "up":
         print "What piece of land do you want to upgrade?(1,2,3...)"
@@ -245,8 +262,18 @@ def stats(landType):
 def stuff():
     staticCity(res)
     
-def population():
+def SilentPopulation():
     global res_pop
+    global com_pop
+    global ind_pop
+    res_pop = (res.count(1) * 2 ) + (res.count(2) * 4) + (res.count(3) * 8) + (res.count(4) * 16) + (res.count(5) * 32) + (res.count(6) * 64) +(res.count(7) * 128) + (res.count(8) * 256) + (res.count(9) * 512)
+    com_pop = (com.count(1) * 2 ) + (com.count(2) * 4) + (com.count(3) * 8) + (com.count(4) * 16) + (com.count(5) * 32) + (com.count(6) * 64) +(com.count(7) * 128) + (com.count(8) * 256) + (com.count(9) * 512)
+    ind_pop = (ind.count(1) * 2 ) + (ind.count(2) * 4) + (ind.count(3) * 8) + (ind.count(4) * 16) + (ind.count(5) * 32) + (ind.count(6) * 64) +(ind.count(7) * 128) + (ind.count(8) * 256) + (ind.count(9) * 512)
+
+def VerbosePopulation():
+    global res_pop
+    global com_pop
+    global ind_pop
     res_pop = (res.count(1) * 2 ) + (res.count(2) * 4) + (res.count(3) * 8) + (res.count(4) * 16) + (res.count(5) * 32) + (res.count(6) * 64) +(res.count(7) * 128) + (res.count(8) * 256) + (res.count(9) * 512)
     print "your residential population is " + `res_pop`
     com_pop = (com.count(1) * 2 ) + (com.count(2) * 4) + (com.count(3) * 8) + (com.count(4) * 16) + (com.count(5) * 32) + (com.count(6) * 64) +(com.count(7) * 128) + (com.count(8) * 256) + (com.count(9) * 512)
@@ -254,11 +281,13 @@ def population():
     ind_pop = (ind.count(1) * 2 ) + (ind.count(2) * 4) + (ind.count(3) * 8) + (ind.count(4) * 16) + (ind.count(5) * 32) + (ind.count(6) * 64) +(ind.count(7) * 128) + (ind.count(8) * 256) + (ind.count(9) * 512)
     print "Your industrial population is " + `ind_pop`
 
+
+
 def SetTaxes():
     pass
     ## allow users to set custom tax rates for res com ind zones.
 def hello():
-    print "hello"
+    pass
 
 
 
@@ -269,8 +298,7 @@ def hello():
 #The above simply defines functions
 print "welcome to ytiCmiS"
 print "You need to build your city up from the ground \n"
-
-#MyThread().
+MyThread().start()
 global money
 money = 1000
 while 1==1:
@@ -297,13 +325,13 @@ while 1==1:
     elif decide == 'stats':
         stats(res)
     elif decide == "pop":
-        population()
+        VerbosePopulation()
     elif decide == "stuff":
         stuff()
     elif decide == "money":
         printMoney(money)
     elif decide == "hello":
-        MyThread().start()
+        DisplayImages()
             
     elif decide == "help":
         print "Type 'res' to build or upgrade residential areas"
