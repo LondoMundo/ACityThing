@@ -1,0 +1,7 @@
+Add a sort of branching system, so that buildings can take different charictaristcs.
+
+Make sure that each type of building has an animation. Com and Ind are playing the Res animations.
+
+Add option to have upgrades (collect taxes earlier, decrease building costs, etc.)
+
+Allow users to set custom tex rates

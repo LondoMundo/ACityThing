@@ -2,10 +2,9 @@
 from time import sleep
 import Tkinter as tk # gives tk namespace
 #wx is used to display the gifs of buildings
-import wx # TODO write a real GUI, wx is already imported
+import wx
 import wx.animate
 import math #this is for squaring numbers when solving how much money upgrades should cost
-import threading
 #res, com, and ind lists are initialized here, and stores the levels of propertys
 res = [1]
 com = [1]
@@ -38,19 +37,7 @@ def Animate(level):
     frame.Show(True)
     # start the event loop
     app.MainLoop()
-#this class defines a thread used to collect taxes every set amount of seconds currently 60.
-class MyThread(threading.Thread):
 
-    def run(self):
-        while 1==1:
-            sleep(60)
-            global money
-            print "You have " + `money` + "money"
-            """10,15,20 could be custom tax rates later"""
-            money = money + (res_pop * 10 ) + (com_pop * 15) + (ind_pop * 20)
-            print "You now have " + `money` + "money"
-##            print com_pop
-##            print ind_pop
 
 #defines the residential functions
 def residential():
@@ -151,9 +138,9 @@ def industry():
         pieceToUp = int(raw_input())
         pieceToUp = pieceToUp - 1
         if money >=((ind[pieceToUp] ** 2) * 100):
-            upgradeLand(ind[pieceToUp])
-            money = money-((ind[pieceToUp] ** 2) * 300)
-            ind[pieceToUp] = ind[pieceToUp] + 1
+            upgradeLand(com[pieceToUp])
+            money = money-((com[pieceToUp] ** 2) * 200)
+            com[pieceToUp] = com[pieceToUp] + 1
         else:
             print "You dont have enough money for this upgrade"
         
@@ -246,42 +233,25 @@ def stuff():
     staticCity(res)
     
 def population():
-    global res_pop
     res_pop = (res.count(1) * 2 ) + (res.count(2) * 4) + (res.count(3) * 8) + (res.count(4) * 16) + (res.count(5) * 32) + (res.count(6) * 64) +(res.count(7) * 128) + (res.count(8) * 256) + (res.count(9) * 512)
-    print "your residential population is " + `res_pop`
+    print "your residential population is " + res_pop
     com_pop = (com.count(1) * 2 ) + (com.count(2) * 4) + (com.count(3) * 8) + (com.count(4) * 16) + (com.count(5) * 32) + (com.count(6) * 64) +(com.count(7) * 128) + (com.count(8) * 256) + (com.count(9) * 512)
-    print "your commercial population is " + `com_pop`
+    print "your commercial population is " + com_pop
     ind_pop = (ind.count(1) * 2 ) + (ind.count(2) * 4) + (ind.count(3) * 8) + (ind.count(4) * 16) + (ind.count(5) * 32) + (ind.count(6) * 64) +(ind.count(7) * 128) + (ind.count(8) * 256) + (ind.count(9) * 512)
-    print "Your industrial population is " + `ind_pop`
+    print "Your industrial population is " + ind_pop
 
-def SetTaxes():
+def taxes(residential, commercial, industrial):
     pass
-    ## allow users to set custom tax rates for res com ind zones.
-def hello():
-    print "hello"
-
-
-
-      
-
-
+    
 #This is where the program actually starts
 #The above simply defines functions
 print "welcome to ytiCmiS"
 print "You need to build your city up from the ground \n"
 
-#MyThread().
-global money
 money = 1000
 while 1==1:
     decide = raw_input("What do you want to do? \nYou have " + `money` +" money \n")
-    
     global money
-    
-    #if taxCounter == 5:
-        #collectTaxes()
-        #pass
-        
     if decide == "res":
         residential()
     if decide == "destroy":
@@ -302,17 +272,9 @@ while 1==1:
         stuff()
     elif decide == "money":
         printMoney(money)
-    elif decide == "hello":
-        MyThread().start()
             
     elif decide == "help":
         print "Type 'res' to build or upgrade residential areas"
         print "Type 'com' to build or upgrade commercial areas"
         print "Type 'ind' to build or upgrade industrial areas"
         print "type 'stats' to see city statistics"
-
-
-
-
-
-    
