@@ -4,4 +4,4 @@ Make sure that each type of building has an animation. Com and Ind are playing t
 
 Add option to have upgrades (collect taxes earlier, decrease building costs, etc.)
 
-Allow users to set custom tex rates
+Allow users to set custom tax rates
