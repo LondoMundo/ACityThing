@@ -10,6 +10,8 @@ from random import randint
 res = [1]
 com = [1]
 ind = [1]
+
+        
 #defines a function that takes property level as an argument
 #function displays a gif (or later a video file from blender) of buildings
 def Animate(level):
@@ -320,8 +322,36 @@ def hello():
 print "welcome to ytiCmiS"
 print "You need to build your city up from the ground \n"
 MyThread().start()
+
 global money
 money = 1000
+res = [1]
+com = [1]
+ind = [1]
+
+
+class main(wx.Frame):
+    def __init__(self, parent, id):
+        mainFrame = wx.Frame.__init__(self, parent, id, "City", size=(375, 175))
+        panel = wx.Panel(self)
+        buyResB = wx.Button(panel, label="buy res", pos=(0,0), size=(100,150))
+        self.Bind(wx.EVT_BUTTON, self.buyRes, buyResB)
+
+    def buyRes(self, event):
+        global money
+        if money >= 100:
+            buyLand()
+            res.append(1)
+            money = money-100
+            print "Done"
+        else:
+            print "You dont have enough money to do that"
+
+if __name__ == '__main__':
+    app=wx.PySimpleApp()
+    frame=main(parent = None, id = -1)
+    frame.Show()
+    app.MainLoop()
 while 1==1:
     decide = raw_input("What do you want to do? \nYou have " + `money` +" money \n")
     
@@ -359,6 +389,8 @@ while 1==1:
         print "Type 'com' to build or upgrade commercial areas"
         print "Type 'ind' to build or upgrade industrial areas"
         print "type 'stats' to see city statistics"
+
+
 
 
 
