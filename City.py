@@ -1,11 +1,11 @@
-#imports the sleep function from the time module to allow for [sleep]ing
-from time import sleep
+from time import sleep #imports the sleep function from the time module to allow for [sleep]ing
 import Tkinter as tk # gives tk namespace
 #wx is used to display the gifs of buildings
 import wx # TODO write a real GUI, wx is already imported
 import wx.animate
 import math #this is for squaring numbers when solving how much money upgrades should cost
 import threading
+from random import randint
 #res, com, and ind lists are initialized here, and stores the levels of propertys
 res = [1]
 com = [1]
@@ -21,7 +21,7 @@ def Animate(level):
             self.SetBackgroundColour("white")
             # pick the filename of an animated GIF file you have ...
             # The reason we use /assets/residential is because it will always be there. It donsn't depend on what is farther up the file system. /Users/colin/ : /Home/colin/
-            ag_fname = "assets/residential" + `level` + ".gif"
+            ag_fname = "assets/gifs/residential" + `level` + ".gif"
             ag = wx.animate.GIFAnimationCtrl(self, id, ag_fname, pos=(10, 10))
             # clears the background
             ag.GetPlayer().UseBackgroundColour(True)
@@ -40,16 +40,18 @@ def Animate(level):
 def DisplayImages():
     class panel(wx.Panel):
         def __init__(self, parent,id):
-            wx.Panel.__init__(self, parent,id)
-            bmp = wx.Image("fruit.jpg", wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
-            newImage = wx.StaticBitmap(self, parent,-1,bitmap=bmp)
-            newImage.Show()
+
+            a = wx.PySimpleApp()
+            wximg = wx.Image('fruit.jpg',wx.BITMAP_TYPE_JPEG)
+            wxbmp=wximg.ConvertToBitmap()
+            f = wx.Frame(None, -1, "Show JPEG demo")
+            f.SetSize( wxbmp.GetSize() )
+            wx.StaticBitmap(f,-1,wxbmp,(0,0))
+            wx.StaticBitmap(f,-1,wxbmp,(300,300))
+            f.Show(True)
+            a.MainLoop()
+
             
-    app = wx.PySimpleApp()
-    frame = wx.Frame(None, -1, "wx.animate.GIFAnimationCtrl()", size = (600, 500))
-    panel(frame, -1)
-    frame.Show(True)
-    app.MainLoop()
         
 #this class defines a thread used to collect taxes every set amount of seconds currently 60.
 class MyThread(threading.Thread):
@@ -61,7 +63,7 @@ class MyThread(threading.Thread):
             global money
             """10,15,20 could be custom tax rates later"""
             money = money + (res_pop * 10 ) + (com_pop * 15) + (ind_pop * 20)
-            print "You now have " + `money` + "money"
+            print "You now have " + `money` + "money \n"
 ##            print com_pop
 ##            print ind_pop
 
@@ -286,6 +288,25 @@ def VerbosePopulation():
 def SetTaxes():
     pass
     ## allow users to set custom tax rates for res com ind zones.
+
+def balanceSheet(res_pop, com_pop, ind_pop):
+    """This function shows how much the user will pull in from taxes in a verbose formatt, and on the next line will also show expenses on a line by line basis"""
+    #money = money + (res_pop * 10 ) + (com_pop * 15) + (ind_pop * 20)
+    resMoney = res_pop * 10
+    comMoney = com_pop * 15
+    indMoney = ind_pop * 20
+    print "your income from Residential areas is " + `resMoney` + " money"
+    print "your income from Commercial areas is " + `comMoney` + " money"
+    print "your income from Industrial areas is " + `indMoney` + " money"
+    
+    resExpense = len(res) * 2
+    print "Residential expenses cost " + `resExpense` + " money"
+    comExpense = len(com) * 3
+    print "Commercial expenses cost " + `comExpense` + " money"
+    indExpense = len(ind) * 4
+    print "Industrial expenses cost " + `indExpense` + " money"
+
+    
 def hello():
     pass
 
@@ -323,7 +344,8 @@ while 1==1:
         industry()
             
     elif decide == 'stats':
-        stats(res)
+        #stats(res)
+        balanceSheet(res_pop, com_pop, ind_pop)
     elif decide == "pop":
         VerbosePopulation()
     elif decide == "stuff":
@@ -331,8 +353,7 @@ while 1==1:
     elif decide == "money":
         printMoney(money)
     elif decide == "hello":
-        DisplayImages()
-            
+        pass            
     elif decide == "help":
         print "Type 'res' to build or upgrade residential areas"
         print "Type 'com' to build or upgrade commercial areas"
